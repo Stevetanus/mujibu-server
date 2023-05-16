@@ -13,7 +13,7 @@ const swaggerDef = {
   },
   servers: [
     {
-      url: `http://localhost:${config.port}/v1`,
+      url: `${process.env.BASE_URL || `http://localhost:${config.port}`}/v1`,
     },
   ],
 };
