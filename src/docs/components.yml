@@ -5,14 +5,54 @@ components:
       properties:
         id:
           type: string
+        team_id:
+          type: string
+        avatar:
+          type: string
+        name:
+          type: string
+        nickname:
+          type: string
+        birthDate:
+          type: string
+          format: date-time
+        gender:
+          type: string
+          enum: ['male', 'female', 'other']
         email:
           type: string
           format: email
-        name:
+        phone:
+          type: string
+        subscribe_newsletter:
+          type: boolean
+        category:
+          type: string
+        contact_name:
+          type: string
+        comment_name:
+          type: string
+        contact_phone:
+          type: string
+        country_code:
+          type: string
+        postal_code:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        address:
           type: string
         role:
           type: string
-          enum: [user, admin]
+          enum: ['user', 'admin']
+        isEmailVerified:
+          type: boolean
+      required:
+        - name
+        - email
+        - role
       example:
         id: 5ebac534954b54139806c112
         email: fake@example.com
@@ -86,7 +126,7 @@ components:
             message: Not found
 
   securitySchemes:
-    bearerAuth:
+    BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT

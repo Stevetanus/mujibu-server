@@ -3,18 +3,13 @@ const validate = require('../../middlewares/validate');
 const authValidation = require('../../validations/auth.validation');
 const authController = require('../../controllers/auth.controller');
 const auth = require('../../middlewares/auth');
-const firebaseGoogleValidate = require('../../middlewares/firebaseGoogleValidate');
+const validateFirebaseGoogle = require('../../middlewares/validateFirebaseGoogle');
 
 const router = express.Router();
 
-router.post(
-  '/firebase-google',
-  firebaseGoogleValidate,
-  // validate(authValidation.firebaseGoogle),
-  authController.firebaseGoogle
-);
 router.post('/register', validate(authValidation.register), authController.register);
 router.post('/login', validate(authValidation.login), authController.login);
+router.post('/firebase-google', validateFirebaseGoogle, authController.loginWithFirebaseGoogle);
 router.post('/logout', validate(authValidation.logout), authController.logout);
 router.post('/refresh-tokens', validate(authValidation.refreshTokens), authController.refreshTokens);
 router.post('/forgot-password', validate(authValidation.forgotPassword), authController.forgotPassword);
@@ -29,6 +24,16 @@ module.exports = router;
  * tags:
  *   name: Auth
  *   description: Authentication
+ */
+
+/**
+ * @swagger
+ * securityDefinitions:
+ *   BearerAuth:
+ *     type: apiKey
+ *     name: Authorization
+ *     scheme: bearer
+ *     in: header
  */
 
 /**
@@ -125,6 +130,37 @@ module.exports = router;
  *             example:
  *               code: 401
  *               message: Invalid email or password
+ */
+
+/**
+ * @swagger
+ * /auth/firebase-google:
+ *   post:
+ *     summary: Firebase Google Login
+ *     tags: [Auth]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *                 tokens:
+ *                   $ref: '#/components/schemas/AuthTokens'
+ *       "401":
+ *         description: Invalid Firebase ID token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *             example:
+ *               code: 401
+ *               message: Invalid Firebase ID token
  */
 
 /**

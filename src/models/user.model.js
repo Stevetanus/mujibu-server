@@ -1,15 +1,34 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const bcrypt = require('bcryptjs');
 const { toJSON, paginate } = require('./plugins');
 const { roles } = require('../config/roles');
 
 const userSchema = mongoose.Schema(
   {
+    team_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      trim: true,
+      ref: 'Team',
+    },
+    avatar: {
+      type: String,
+      trim: true,
+    },
     name: {
       type: String,
       required: true,
       trim: true,
+    },
+    nickname: {
+      type: String,
+      trim: true,
+    },
+    birthDate: {
+      type: Date,
+    },
+    gender: {
+      type: String,
+      enum: ['male', 'female', 'other'],
     },
     email: {
       type: String,
@@ -23,22 +42,62 @@ const userSchema = mongoose.Schema(
         }
       },
     },
-    // password: {
-    //   type: String,
-    //   required: true,
-    //   trim: true,
-    //   minlength: 8,
-    //   validate(value) {
-    //     if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-    //       throw new Error('Password must contain at least one letter and one number');
-    //     }
-    //   },
-    //   private: true, // used by the toJSON plugin
-    // },
+    phone: {
+      type: String,
+      trim: true,
+    },
+    subscribe_newsletter: {
+      type: Boolean,
+      default: false,
+    },
+    category: {
+      type: String,
+      trim: true,
+    },
+    contact_name: {
+      type: String,
+      trim: true,
+    },
+    comment_name: {
+      type: String,
+      trim: true,
+    },
+    contact_phone: {
+      type: String,
+      trim: true,
+    },
+    country_code: {
+      type: String,
+      trim: true,
+    },
+    postal_code: {
+      type: String,
+      trim: true,
+    },
+    city: {
+      type: String,
+      trim: true,
+    },
+    district: {
+      type: String,
+      trim: true,
+    },
+    address: {
+      type: String,
+      trim: true,
+    },
     role: {
       type: String,
       enum: roles,
       default: 'user',
+    },
+    notifications: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Notification',
+    },
+    collects: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Collect',
     },
     isEmailVerified: {
       type: Boolean,
@@ -64,24 +123,6 @@ userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
   return !!user;
 };
-
-/**
- * Check if password matches the user's password
- * @param {string} password
- * @returns {Promise<boolean>}
- */
-userSchema.methods.isPasswordMatch = async function (password) {
-  const user = this;
-  return bcrypt.compare(password, user.password);
-};
-
-userSchema.pre('save', async function (next) {
-  const user = this;
-  if (user.isModified('password')) {
-    user.password = await bcrypt.hash(user.password, 8);
-  }
-  next();
-});
 
 /**
  * @typedef User

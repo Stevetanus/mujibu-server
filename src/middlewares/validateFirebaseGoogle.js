@@ -20,26 +20,23 @@ admin.initializeApp({
   databaseURL: 'https://node-test-1fabc-default-rtdb.firebaseio.com',
 });
 
-const firebaseGoogleValidate = async (req, res, next) => {
+const validateFirebaseGoogle = async (req, res, next) => {
   const header = req.headers.authorization;
-  console.log('🚀 ~ file: firebaseGoogleValidate.js:12 ~ firebaseGoogleValidate ~ header:', header);
   if (!header || !header.startsWith('Bearer ')) {
-    res.status(httpStatus[401]).send(httpStatus['401_MESSAGE']);
+    res.status(httpStatus.UNAUTHORIZED).send(httpStatus['401_MESSAGE']);
     return;
   }
 
   const idToken = header.split('Bearer ')[1];
-  console.log('🚀 ~ file: firebaseGoogleValidate.js:32 ~ firebaseGoogleValidate ~ idToken:', idToken);
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(idToken);
-    console.log('🚀 ~ file: firebaseGoogleValidate.js:36 ~ firebaseGoogleValidate ~ decodedToken:', decodedToken);
     req.user = decodedToken;
     next();
   } catch (error) {
     console.error('Error while verifying Firebase ID token:', error);
-    res.status(httpStatus[401]).send(httpStatus['401_MESSAGE']);
+    res.status(httpStatus.UNAUTHORIZED).send(httpStatus['401_MESSAGE']);
   }
 };
 
-module.exports = firebaseGoogleValidate;
+module.exports = validateFirebaseGoogle;

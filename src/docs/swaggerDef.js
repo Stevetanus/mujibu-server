@@ -16,6 +16,15 @@ const swaggerDef = {
       url: `${process.env.BASE_URL || `http://localhost:${config.port}`}/v1`,
     },
   ],
+  components: {
+    securitySchemes: {
+      BearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
 };
 
 module.exports = swaggerDef;

@@ -2,12 +2,9 @@ const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { authService, userService, tokenService, emailService } = require('../services');
 
-const firebaseGoogle = catchAsync(async (req, res) => {
-  console.log('🚀 ~ file: auth.controller.js:6 ~ firebaseGoogle ~ req:', req);
-  const user = await userService.createUser(req.user);
-  console.log('🚀 ~ file: auth.controller.js:7 ~ firebaseGoogle ~ user:', user);
-  const tokens = await tokenService.generateAuthTokens(user);
-  console.log('🚀 ~ file: auth.controller.js:8 ~ firebaseGoogle ~ tokens:', tokens);
+const loginWithFirebaseGoogle = catchAsync(async (req, res) => {
+  const user = await userService.createOrGetUserForFirebaseLogin(req.user);
+  const tokens = await tokenService.generateAuthTokens(user, req.user.uid);
   res.status(httpStatus.CREATED).send({ user, tokens });
 });
 
@@ -57,7 +54,7 @@ const verifyEmail = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-  firebaseGoogle,
+  loginWithFirebaseGoogle,
   register,
   login,
   logout,

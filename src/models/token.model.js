@@ -14,6 +14,11 @@ const tokenSchema = mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    firebaseUid: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     type: {
       type: String,
       enum: [tokenTypes.REFRESH, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL],

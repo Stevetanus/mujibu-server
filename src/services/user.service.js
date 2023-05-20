@@ -3,12 +3,26 @@ const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /**
+ * Create a user or return the existing one in case of Firebase login
+ * @param {Object} userBody
+ * @returns {Promise<User>}
+ */
+const createOrGetUserForFirebaseLogin = async (userBody) => {
+  const existingUser = await User.findOne({ email: userBody.email });
+
+  if (existingUser) {
+    return existingUser;
+  }
+
+  return User.create(userBody);
+};
+
+/**
  * Create a user
  * @param {Object} userBody
  * @returns {Promise<User>}
  */
 const createUser = async (userBody) => {
-  console.log('🚀 ~ file: user.service.js:11 ~ createUser ~ userBody:', userBody);
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
@@ -81,6 +95,7 @@ const deleteUserById = async (userId) => {
 };
 
 module.exports = {
+  createOrGetUserForFirebaseLogin,
   createUser,
   queryUsers,
   getUserById,

@@ -6,6 +6,20 @@ const ApiError = require('../utils/ApiError');
 const { tokenTypes } = require('../config/tokens');
 
 /**
+ * Login with firebase google
+ * @param {string} email
+ * @param {string} password
+ * @returns {Promise<User>}
+ */
+const loginUserWithFirebaseGoogle = async (email) => {
+  const user = await userService.getUserByEmail(email);
+  if (!user) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email');
+  }
+  return user;
+};
+
+/**
  * Login with username and password
  * @param {string} email
  * @param {string} password
@@ -91,6 +105,7 @@ const verifyEmail = async (verifyEmailToken) => {
 };
 
 module.exports = {
+  loginUserWithFirebaseGoogle,
   loginUserWithEmailAndPassword,
   logout,
   refreshAuth,
