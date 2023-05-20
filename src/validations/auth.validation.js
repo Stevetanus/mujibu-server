@@ -1,6 +1,10 @@
 const Joi = require('joi');
 const { password } = require('./custom.validation');
 
+const firebaseGoogle = {
+  body: Joi.object().keys({}),
+};
+
 const register = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
@@ -50,6 +54,7 @@ const verifyEmail = {
 };
 
 module.exports = {
+  firebaseGoogle,
   register,
   login,
   logout,
