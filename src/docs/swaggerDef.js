@@ -4,7 +4,7 @@ const config = require('../config/config');
 const swaggerDef = {
   openapi: '3.0.0',
   info: {
-    title: 'node-express-boilerplate API documentation',
+    title: 'mujibu API documentation',
     version,
     license: {
       name: 'MIT',
@@ -13,7 +13,7 @@ const swaggerDef = {
   },
   servers: [
     {
-      url: `${process.env.BASE_URL || `http://localhost:${config.port}`}/v1`,
+      url: `${process.env.BASE_URL || `http://localhost:${config.port}`}/api`,
     },
   ],
   components: {

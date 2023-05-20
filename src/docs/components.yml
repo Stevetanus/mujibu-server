@@ -54,10 +54,14 @@ components:
         - email
         - role
       example:
-        id: 5ebac534954b54139806c112
-        email: fake@example.com
-        name: fake name
-        role: user
+        id: 6468849af7727e67acfcba4d
+        email: 000testonly@gmail.com,
+        name: 專用測試,
+        role: user,
+        isEmailVerified: false,
+        subscribe_newsletter: false,
+        notifications: [],
+        collects: [],
 
     Token:
       type: object
