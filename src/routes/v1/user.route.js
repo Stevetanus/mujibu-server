@@ -34,7 +34,7 @@ module.exports = router;
  *     description: Only admins can create other users.
  *     tags: [Users]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -85,7 +85,7 @@ module.exports = router;
  *     description: Only admins can retrieve all users.
  *     tags: [Users]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: query
  *         name: name
@@ -154,7 +154,7 @@ module.exports = router;
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
  *     tags: [Users]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -181,7 +181,7 @@ module.exports = router;
  *     description: Logged in users can only update their own information. Only admins can update other users.
  *     tags: [Users]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -232,7 +232,7 @@ module.exports = router;
  *     description: Logged in users can delete only themselves. Only admins can delete other users.
  *     tags: [Users]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
