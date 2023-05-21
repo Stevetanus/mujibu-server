@@ -16,7 +16,6 @@ const tokenSchema = mongoose.Schema(
     },
     firebaseUid: {
       type: String,
-      required: true,
       unique: true,
     },
     type: {

@@ -67,24 +67,29 @@ const verifyToken = async (token, type) => {
  * @param {User} user
  * @returns {Promise<Object>}
  */
-const generateAuthTokens = async (user, firebaseUid) => {
+const generateAuthTokens = async (user, firebaseUid = null) => {
   const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
   const refreshTokenExpires = moment().add(config.jwt.refreshExpirationDays, 'days');
 
   const accessToken = generateToken(user.id, firebaseUid, accessTokenExpires, tokenTypes.ACCESS);
   const refreshToken = generateToken(user.id, firebaseUid, refreshTokenExpires, tokenTypes.REFRESH);
 
-  // Try to find an existing token with the same firebaseUid
-  const existingToken = await Token.findOne({ firebaseUid });
+  if (firebaseUid) {
+    // Try to find an existing token with the same firebaseUid
+    let existingToken;
+    if (firebaseUid) {
+      existingToken = await Token.findOne({ firebaseUid });
+    }
 
-  if (existingToken) {
-    // If a token already exists, update it
-    existingToken.token = refreshToken;
-    existingToken.expires = refreshTokenExpires;
-    await existingToken.save();
-  } else {
-    // If no token exists, create a new one
-    await saveToken(refreshToken, user.id, firebaseUid, refreshTokenExpires, tokenTypes.REFRESH);
+    if (existingToken) {
+      // If a token already exists, update it
+      existingToken.token = refreshToken;
+      existingToken.expires = refreshTokenExpires;
+      await existingToken.save();
+    } else {
+      // If no token exists, create a new one
+      await saveToken(refreshToken, user.id, firebaseUid, refreshTokenExpires, tokenTypes.REFRESH);
+    }
   }
 
   return {
