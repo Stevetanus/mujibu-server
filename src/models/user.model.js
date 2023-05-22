@@ -6,7 +6,7 @@ const { roles } = require('../config/roles');
 
 const userSchema = mongoose.Schema(
   {
-    team_id: {
+    teamId: {
       type: mongoose.Schema.Types.ObjectId,
       trim: true,
       ref: 'Team',
@@ -63,7 +63,7 @@ const userSchema = mongoose.Schema(
       trim: true,
       default: '',
     },
-    subscribe_newsletter: {
+    subscribeNewsletter: {
       type: Boolean,
       default: false,
     },
@@ -72,27 +72,27 @@ const userSchema = mongoose.Schema(
       trim: true,
       default: '',
     },
-    contact_name: {
+    contactName: {
       type: String,
       trim: true,
       default: '',
     },
-    comment_name: {
+    commentName: {
       type: String,
       trim: true,
       default: '',
     },
-    contact_phone: {
+    contactPhone: {
       type: String,
       trim: true,
       default: '',
     },
-    country_code: {
+    countryCode: {
       type: String,
       trim: true,
       default: '',
     },
-    postal_code: {
+    postalCode: {
       type: String,
       trim: true,
       default: '',

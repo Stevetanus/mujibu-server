@@ -9,12 +9,10 @@ const ApiError = require('../utils/ApiError');
  */
 const createOrGetUserForFirebaseLogin = async (userBody) => {
   const existingUser = await User.findOne({ email: userBody.email });
-
   if (existingUser) {
     return existingUser;
   }
-
-  return User.create(userBody);
+  return User.create({ ...userBody, avatar: userBody.picture, isEmailVerified: userBody.email_verified });
 };
 
 /**

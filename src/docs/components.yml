@@ -5,7 +5,7 @@ components:
       properties:
         id:
           type: string
-        team_id:
+        teamId:
           type: string
         avatar:
           type: string
@@ -24,19 +24,19 @@ components:
           format: email
         phone:
           type: string
-        subscribe_newsletter:
+        subscribeNewsletter:
           type: boolean
         category:
           type: string
-        contact_name:
+        contactName:
           type: string
-        comment_name:
+        commentName:
           type: string
-        contact_phone:
+        contactPhone:
           type: string
-        country_code:
+        countryCode:
           type: string
-        postal_code:
+        postalCode:
           type: string
         city:
           type: string
@@ -59,7 +59,7 @@ components:
         name: 專用測試
         role: user
         isEmailVerified: false
-        subscribe_newsletter: false
+        subscribeNewsletter: false
         notifications: []
         collects: []
 
