@@ -1,11 +1,17 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
+const toTimestamp = require('../utils/toTimestamp');
 const { authService, userService, tokenService, emailService } = require('../services');
 
 const loginWithFirebaseGoogle = catchAsync(async (req, res) => {
   const user = await userService.createOrGetUserForFirebaseLogin(req.user);
   const tokens = await tokenService.generateAuthTokens(user, req.user.uid);
-  res.status(httpStatus.CREATED).send({ user, tokens });
+  const userResponse = {
+    ...user.toJSON(),
+    createdAt: toTimestamp(user.createdAt),
+  };
+
+  res.status(httpStatus.CREATED).send({ user: userResponse, tokens });
 });
 
 const register = catchAsync(async (req, res) => {
