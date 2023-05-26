@@ -139,7 +139,7 @@ module.exports = router;
  *     summary: Firebase Google Login
  *     tags: [Auth]
  *     security:
- *       - BearerAuth: []
+ *       - BearerAuth_Firebase: []
  *     responses:
  *       "200":
  *         description: OK

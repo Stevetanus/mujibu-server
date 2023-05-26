@@ -18,6 +18,11 @@ const swaggerDef = {
   ],
   components: {
     securitySchemes: {
+      BearerAuth_Firebase: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
       BearerAuth: {
         type: 'http',
         scheme: 'bearer',
