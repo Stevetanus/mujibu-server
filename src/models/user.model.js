@@ -31,9 +31,9 @@ const userSchema = mongoose.Schema(
       type: Date,
     },
     gender: {
-      type: String,
-      enum: ['male', 'female', 'other'],
-      default: 'other',
+      type: Number,
+      enum: [0, 1, 2], // 'male', 'female', 'other'
+      default: 0,
     },
     email: {
       type: String,
@@ -68,9 +68,9 @@ const userSchema = mongoose.Schema(
       default: false,
     },
     category: {
-      type: String,
-      trim: true,
-      default: '',
+      type: [String],
+      enum: ['藝術', '設計', '電影', '音樂', '科技', '出版'],
+      default: [],
     },
     contactName: {
       type: String,
