@@ -17,8 +17,8 @@ components:
           type: string
           format: date-time
         gender:
-          type: string
-          enum: ['male', 'female', 'other']
+          type: integer
+          enum: [0, 1, 2] # 'male', 'female', 'other'
         email:
           type: string
           format: email
@@ -27,7 +27,10 @@ components:
         subscribeNewsletter:
           type: boolean
         category:
-          type: string
+          type: array
+          items:
+            type: string
+            enum: ['藝術', '設計', '電影', '音樂', '科技', '出版']
         contactName:
           type: string
         commentName:

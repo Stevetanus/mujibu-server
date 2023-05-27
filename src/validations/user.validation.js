@@ -37,10 +37,13 @@ const updateUser = {
       name: Joi.string(),
       nickname: Joi.string(),
       birthDate: Joi.date(),
-      gender: Joi.number().valid(0, 1, 2), // 'male', 'female', 'other'
+      gender: Joi.number().valid(0, 1, 2).allow(null).optional(), // 'male', 'female', 'other'
       phone: Joi.string(),
       subscribeNewsletter: Joi.boolean(),
-      category: Joi.array().items(Joi.string().valid(...['藝術', '設計', '電影', '音樂', '科技', '出版'])),
+      category: Joi.array()
+        .items(Joi.string().valid(...['藝術', '設計', '電影', '音樂', '科技', '出版']))
+        .allow(null)
+        .optional(),
       contactName: Joi.string(),
       commentName: Joi.string(),
       contactPhone: Joi.string(),
