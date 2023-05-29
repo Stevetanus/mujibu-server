@@ -3,37 +3,37 @@ const { toJSON, paginate } = require('./plugins');
 
 const projectSchema = mongoose.Schema(
   {
-    team_id: {
+    projectTeamId: {
       type: mongoose.Schema.Types.ObjectId,
       trim: true,
       ref: 'Team',
     },
-    project_visual: {
+    projectVisual: {
       type: String,
       trim: true,
     },
-    project_name: {
+    projectName: {
       type: String,
       required: true,
       trim: true,
     },
-    project_start_time: {
+    projectStartTime: {
       type: Date,
       trim: true,
     },
-    project_end_time: {
+    projectEndTime: {
       type: Date,
       trim: true,
     },
-    project_type: {
+    projectType: {
       type: String,
       enum: ['0', '1', '2', '3'],
     },
-    project_status: {
+    projectStatus: {
       type: String,
       enum: ['0', '1', '2', '3', '4', '5', '6'],
     },
-    project_form: {
+    projectForm: {
       type: String,
       enum: ['0', '1'],
     },
@@ -41,23 +41,23 @@ const projectSchema = mongoose.Schema(
       type: String,
       enum: ['0', '1', '2', '3', '4', '5'],
     },
-    target_amount: {
+    targetAmount: {
       type: Number,
     },
     backers: {
       type: Number,
     },
-    current_amount: {
+    currentAmount: {
       type: Number,
     },
-    current_amount_percentage: {
+    currentAmountPercentage: {
       type: Number,
     },
-    project_url: {
+    projectUrl: {
       type: String,
       trim: true,
     },
-    project_content: {
+    projectContent: {
       type: String,
       trim: true,
     },
