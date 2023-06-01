@@ -3,7 +3,7 @@ const { toJSON, paginate } = require('./plugins');
 
 const projectSchema = mongoose.Schema(
   {
-    projectTeamId: {
+    teamId: {
       type: mongoose.Schema.Types.ObjectId,
       trim: true,
       ref: 'Team',
