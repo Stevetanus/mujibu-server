@@ -3,37 +3,46 @@ const { toJSON, paginate } = require('./plugins');
 
 const projectSchema = mongoose.Schema(
   {
-    teamId: {
-      type: mongoose.Schema.Types.ObjectId,
-      trim: true,
-      ref: 'Team',
-    },
-    projectVisual: {
+    // teamId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   trim: true,
+    //   ref: 'Team',
+    // },
+    proposer: {
       type: String,
-      trim: true,
     },
-    projectName: {
+    name: {
       type: String,
       required: true,
       trim: true,
     },
-    projectStartTime: {
-      type: Date,
+    description: {
+      type: String,
+      required: true,
       trim: true,
     },
-    projectEndTime: {
-      type: Date,
+    image: {
+      type: String,
+      required: true,
       trim: true,
     },
-    projectType: {
+    startTime: {
+      type: Date,
+      required: true,
+    },
+    endTime: {
+      type: Date,
+      required: true,
+    },
+    type: {
       type: String,
       enum: ['0', '1', '2', '3'],
     },
-    projectStatus: {
+    status: {
       type: String,
       enum: ['0', '1', '2', '3', '4', '5', '6'],
     },
-    projectForm: {
+    form: {
       type: String,
       enum: ['0', '1'],
     },
@@ -41,24 +50,25 @@ const projectSchema = mongoose.Schema(
       type: String,
       enum: ['0', '1', '2', '3', '4', '5'],
     },
-    targetAmount: {
+    fundraisingGoal: {
       type: Number,
+      required: true,
     },
     backers: {
       type: Number,
+      default: 0,
     },
     currentAmount: {
       type: Number,
+      default: 0,
     },
-    currentAmountPercentage: {
-      type: Number,
-    },
-    projectUrl: {
+    url: {
       type: String,
       trim: true,
     },
-    projectContent: {
+    content: {
       type: String,
+      required: true,
       trim: true,
     },
     score: {
@@ -67,16 +77,25 @@ const projectSchema = mongoose.Schema(
     carousel: {
       type: Boolean,
     },
+    attachmentLink: {
+      type: String,
+      trim: true,
+    },
   },
   {
     timestamps: true,
   }
 );
 
+projectSchema.virtual('currentAmountPercentage').get(function () {
+  return Math.ceil((this.currentAmount / this.fundraisingGoal) * 100);
+});
+
 // add plugin that converts mongoose to json
 projectSchema.plugin(toJSON);
 projectSchema.plugin(paginate);
-
+// Add the toJSON plugin which also ensures to include the virtual properties
+projectSchema.set('toJSON', { virtuals: true });
 /**
  * @typedef Project
  */

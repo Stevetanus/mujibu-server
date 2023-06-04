@@ -11,11 +11,11 @@ const createProject = {
 
 const getProjects = {
   query: Joi.object().keys({
-    name: Joi.string(),
-    role: Joi.string(),
-    sortBy: Joi.string(),
-    limit: Joi.number().integer(),
-    page: Joi.number().integer(),
+    projectType: Joi.number().default(0),
+    category: Joi.number().default(0),
+    sortBy: Joi.string().default('startTimer'),
+    page: Joi.number(),
+    perPage: Joi.number(),
   }),
 };
 

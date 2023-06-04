@@ -1,5 +1,4 @@
 const httpStatus = require('http-status');
-const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { projectService } = require('../services');
@@ -10,9 +9,8 @@ const createProject = catchAsync(async (req, res) => {
 });
 
 const getProjects = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name', 'role']);
-  const options = pick(req.query, ['sortBy', 'limit', 'page']);
-  const result = await projectService.queryProjects(filter, options);
+  const { query } = req;
+  const result = await projectService.getProjects(query);
   res.send(result);
 });
 
@@ -34,10 +32,17 @@ const deleteProject = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+const postFakeProjects = catchAsync(async (req, res) => {
+  const { query } = req;
+  const projectsFake = await projectService.postFakeProjects(query);
+  res.send(projectsFake);
+});
+
 module.exports = {
   createProject,
   getProjects,
   getProject,
   updateProject,
   deleteProject,
+  postFakeProjects,
 };
