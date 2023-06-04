@@ -17,3 +17,32 @@ module.exports = router;
  *   name: Home
  *   description: Home
  */
+
+/**
+ * @swagger
+ * /home/hot:
+ *   get:
+ *     summary: Get hot type: '0' & sortBy: 'backers:desc'
+ *     description: get from project.
+ *     tags: [Home]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Project'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ */
