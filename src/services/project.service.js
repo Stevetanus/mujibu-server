@@ -5,8 +5,8 @@ const { Project } = require('../models');
 
 const generateRandomProjects = (numProjects) => {
   const projects = [];
-  const currentAmount = faker.number.int({ min: 500 });
-  const fundraisingGoal = faker.number.int({ min: currentAmount + 1 });
+  const currentAmount = faker.number.int({ min: 0, max: 10000000 });
+  const fundraisingGoal = faker.number.int({ min: currentAmount + 1, max: 10000000 });
   for (let i = 0; i < numProjects; i += 1) {
     const project = new Project({
       proposer: faker.person.fullName(),
@@ -20,7 +20,7 @@ const generateRandomProjects = (numProjects) => {
       form: faker.number.int({ min: 0, max: 1 }).toString(),
       category: faker.number.int({ min: 0, max: 5 }).toString(),
       fundraisingGoal,
-      backers: faker.number.int(),
+      backers: faker.number.int({ min: 0, max: 10000 }),
       currentAmount,
       url: faker.internet.url(),
       content: `<div>${faker.lorem.paragraph()}</div>`,
@@ -79,7 +79,33 @@ const postFakeProjects = async (query) => {
   }
 };
 
+const queryProjectsHot = async (filter, options) => {
+  const projects = await Project.paginate(filter, options); // 使用 paginate 方法
+  return projects;
+};
+const queryProjectsCarousel = async (filter, options) => {
+  const projects = await Project.paginate(filter, options); // 使用 paginate 方法
+  return projects;
+};
+const queryProjectsPicks = async (filter, options) => {
+  const projectsHot = await Project.paginate(filter, options); // 使用 paginate 方法
+  return projectsHot;
+};
+const queryProjectsSuccess = async (filter, options) => {
+  const projects = await Project.paginate(filter, options); // 使用 paginate 方法
+  return projects;
+};
+const queryProjectsNew = async (filter, options) => {
+  const projects = await Project.paginate(filter, options); // 使用 paginate 方法
+  return projects;
+};
+
 module.exports = {
   getProjects,
   postFakeProjects,
+  queryProjectsHot,
+  queryProjectsCarousel,
+  queryProjectsPicks,
+  queryProjectsSuccess,
+  queryProjectsNew,
 };

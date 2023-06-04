@@ -1,11 +1,13 @@
-const httpStatus = require('http-status');
-const ApiError = require('../utils/ApiError');
+// const httpStatus = require('http-status');
+// const pick = require('../utils/pick');
+// const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { projectService } = require('../services');
 
-const createProject = catchAsync(async (req, res) => {
-  const project = await projectService.createProject(req.body);
-  res.status(httpStatus.CREATED).send(project);
+const postFakeProjects = catchAsync(async (req, res) => {
+  const { query } = req;
+  const projectsFake = await projectService.postFakeProjects(query);
+  res.send(projectsFake);
 });
 
 const getProjects = catchAsync(async (req, res) => {
@@ -14,35 +16,67 @@ const getProjects = catchAsync(async (req, res) => {
   res.send(result);
 });
 
-const getProject = catchAsync(async (req, res) => {
-  const project = await projectService.getProjectById(req.params.projectId);
-  if (!project) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Project not found');
-  }
-  res.send(project);
+const getHomeHot = catchAsync(async (req, res) => {
+  const filter = { type: '0' }; // 搜尋條件
+  const options = {
+    sortBy: 'backers:desc', // 排序
+    limit: 6, // 取前 6 筆
+    page: 1, // 頁數
+  };
+  const { data } = await projectService.queryProjectsHot(filter, options);
+  res.send({ status: 'Success', data });
 });
 
-const updateProject = catchAsync(async (req, res) => {
-  const user = await projectService.updateProjectById(req.params.userId, req.body);
-  res.send(user);
+const getHomeCarousel = catchAsync(async (req, res) => {
+  const filter = { carousel: true }; // 搜尋條件
+  const options = {
+    // sortBy: 'backers:desc', // 排序
+    limit: 6, // 取前 6 筆
+    page: 1, // 頁數
+  };
+  const { data } = await projectService.queryProjectsCarousel(filter, options);
+  res.send({ status: 'Success', data });
 });
 
-const deleteProject = catchAsync(async (req, res) => {
-  await projectService.deleteUserById(req.params.projectId);
-  res.status(httpStatus.NO_CONTENT).send();
+const getHomePicks = catchAsync(async (req, res) => {
+  const filter = { type: '1' }; // 搜尋條件
+  const options = {
+    sortBy: 'score:desc', // 排序
+    limit: 6, // 取前 6 筆
+    page: 1, // 頁數
+  };
+  const { data } = await projectService.queryProjectsPicks(filter, options);
+  res.send({ status: 'Success', data });
 });
 
-const postFakeProjects = catchAsync(async (req, res) => {
-  const { query } = req;
-  const projectsFake = await projectService.postFakeProjects(query);
-  res.send(projectsFake);
+const getHomeSuccess = catchAsync(async (req, res) => {
+  const filter = { type: '2' }; // 搜尋條件
+  const options = {
+    sortBy: 'currentAmountPercentage:desc', // 排序
+    limit: 6, // 取前 6 筆
+    page: 1, // 頁數
+  };
+  const { data } = await projectService.queryProjectsSuccess(filter, options);
+  res.send({ status: 'Success', data });
+});
+
+const getHomeNew = catchAsync(async (req, res) => {
+  const filter = { type: '0' }; // 搜尋條件
+  const options = {
+    sortBy: 'startTime:desc', // 排序
+    limit: 6, // 取前 6 筆
+    page: 1, // 頁數
+  };
+  const { data } = await projectService.queryProjectsNew(filter, options);
+  res.send({ status: 'Success', data });
 });
 
 module.exports = {
-  createProject,
-  getProjects,
-  getProject,
-  updateProject,
-  deleteProject,
   postFakeProjects,
+  getProjects,
+  getHomeHot,
+  getHomeCarousel,
+  getHomePicks,
+  getHomeSuccess,
+  getHomeNew,
 };
