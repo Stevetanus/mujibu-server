@@ -3,7 +3,7 @@ const { toJSON, paginate } = require('./plugins');
 
 const projectSchema = mongoose.Schema(
   {
-    // teamId: {
+    // projectTeamId: {
     //   type: mongoose.Schema.Types.ObjectId,
     //   trim: true,
     //   ref: 'Team',
@@ -11,7 +11,7 @@ const projectSchema = mongoose.Schema(
     proposer: {
       type: String,
     },
-    name: {
+    projectName: {
       type: String,
       required: true,
       trim: true,
@@ -21,7 +21,7 @@ const projectSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    image: {
+    projectVisual: {
       type: String,
       required: true,
       trim: true,
@@ -34,23 +34,23 @@ const projectSchema = mongoose.Schema(
       type: Date,
       required: true,
     },
-    type: {
-      type: String,
-      enum: ['0', '1', '2', '3'],
+    projectType: {
+      type: Number,
+      enum: [1, 2, 3, 4],
     },
-    status: {
-      type: String,
-      enum: ['0', '1', '2', '3', '4', '5', '6'],
+    projectStatus: {
+      type: Number,
+      enum: [1, 2, 3, 4, 5, 6, 7],
     },
-    form: {
-      type: String,
-      enum: ['0', '1'],
+    projectForm: {
+      type: Number,
+      enum: [1, 2],
     },
     category: {
-      type: String,
-      enum: ['0', '1', '2', '3', '4', '5'],
+      type: Number,
+      enum: [1, 2, 3, 4, 5, 6],
     },
-    fundraisingGoal: {
+    targetAmount: {
       type: Number,
       required: true,
     },
@@ -62,11 +62,11 @@ const projectSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    url: {
+    projectUrl: {
       type: String,
       trim: true,
     },
-    content: {
+    projectContent: {
       type: String,
       required: true,
       trim: true,
@@ -88,7 +88,7 @@ const projectSchema = mongoose.Schema(
 );
 
 projectSchema.virtual('currentAmountPercentage').get(function () {
-  return Math.ceil((this.currentAmount / this.fundraisingGoal) * 100);
+  return Math.ceil((this.currentAmount / this.targetAmount) * 100);
 });
 
 // add plugin that converts mongoose to json
