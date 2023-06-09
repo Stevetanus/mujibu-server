@@ -1,65 +1,133 @@
 // const httpStatus = require('http-status');
-const { faker } = require('@faker-js/faker');
+const { fakerZH_TW: faker } = require('@faker-js/faker');
 const { Project } = require('../models');
 // const ApiError = require('../utils/ApiError');
 
 const generateRandomProjects = (numProjects) => {
-  const projects = [];
+  const fakeData = [];
   for (let i = 0; i < numProjects; i += 1) {
+    const project = {};
     const currentAmount = faker.number.int({ min: 0, max: 10000000 / 2 });
-    const targetAmount = faker.number.int({ min: currentAmount, max: 10000000 });
-    const project = new Project({
-      proposer: faker.person.fullName(),
-      projectName: `Balance衡壓坐墊｜市場唯一衡壓概念健康坐墊，坐出 Q 軟好體態！${i}`,
-      description: faker.lorem.paragraph(),
-      projectVisual: faker.image.url(),
-      startTime: faker.date.past(),
-      endTime: faker.date.future(),
-      projectType: faker.number.int({ min: 1, max: 4 }).toString(),
-      projectStatus: faker.number.int({ min: 1, max: 7 }).toString(),
-      projectForm: faker.number.int({ min: 1, max: 2 }).toString(),
-      category: faker.number.int({ min: 1, max: 6 }).toString(),
-      targetAmount,
-      backers: faker.number.int({ min: 0, max: 10000 }),
-      currentAmount,
-      projectUrl: faker.internet.url(),
-      projectContent: `<div>${faker.lorem.paragraph()}</div>`,
-      score: faker.number.int({ min: 1, max: 5 }),
-      carousel: faker.datatype.boolean(),
-      attachmentLink: '',
-    });
-    projects.push(project);
+    const goalAmount = faker.number.int({ min: currentAmount, max: 10000000 });
+    project.projectProposer = {
+      id: faker.database.mongodbObjectId(),
+      name: `${faker.person.firstName()} ${faker.person.lastName()}`,
+    };
+    project.projectTeam = {
+      teamName: `團隊名稱_${i}`,
+      teamIntroduction: faker.lorem.paragraph(),
+      teamAvatar: faker.image.avatar(),
+      representativeName: `${faker.person.firstName()} ${faker.person.lastName()}`,
+      representativeMobile: faker.phone.imei(),
+      representativePhone: faker.phone.imei(),
+      representativeEmail: faker.internet.email(),
+      companyName: `公司名稱_${i}`,
+      companyPhone: faker.phone.imei(),
+      companyRegistrationNumber: faker.string.alpha(10),
+      companyAddress: '公司地址-公司地址-公司地址',
+      socialWebsite: faker.internet.url(),
+      socialEmail: faker.internet.email(),
+      socialFb: faker.internet.url(),
+      socialLine: faker.internet.url(),
+      socialIg: faker.internet.url(),
+      socialYoutube: faker.internet.url(),
+    };
+    project.projectPlans = [];
+    for (let j = 0; j < 3; j += 1) {
+      const plan = {
+        planName: faker.commerce.productName(),
+        planType: faker.helpers.arrayElement(['Type A', 'Type B', 'Type C']),
+        planQuantity: faker.number.int({ min: 0, max: 3 }),
+        planDiscountPrice: faker.commerce.price(),
+        planOriginalPrice: faker.commerce.price(),
+        planStartTime: faker.date.future(),
+        planEndTime: faker.date.future(),
+        planImage: faker.image.url(),
+        planDescription: faker.lorem.paragraph(),
+        otherNotes: [faker.lorem.sentence(), faker.lorem.sentence()],
+        isRealProduct: faker.datatype.boolean(),
+      };
+      project.projectPlans.push(plan);
+    }
+    project.latestNews = [faker.lorem.sentence(), faker.lorem.sentence()];
+    project.faqs = [faker.lorem.sentence(), faker.lorem.sentence()];
+    project.comments = [faker.lorem.sentence(), faker.lorem.sentence()];
+    project.projectOrders = [faker.database.mongodbObjectId()];
+    project.projectRefunds = [faker.database.mongodbObjectId()];
+    project.projectFollowers = [faker.database.mongodbObjectId()];
+    project.projectType = faker.number.int({ min: 0, max: 1 });
+    project.projectForm = faker.number.int({ min: 0, max: 3 });
+    project.projectStatus = faker.number.int({ min: 0, max: 9 });
+    project.projectCategory = faker.number.int({ min: 0, max: 5 });
+    project.projectName = faker.commerce.productName();
+    project.projectImage = faker.image.url();
+    project.projectDescription = faker.lorem.paragraph();
+    project.goalAmount = goalAmount;
+    project.currentAmount = currentAmount;
+    project.startTime = faker.date.past();
+    project.endTime = faker.date.future();
+    project.officialPage = faker.internet.url();
+    project.fanPage = faker.internet.url();
+    project.attachmentLink = faker.internet.url();
+    project.projectContent = faker.lorem.paragraph();
+    project.projectScore = faker.number.int({ min: 0, max: 10 });
+    project.projectBackers = faker.number.int({ min: 0, max: 1000 });
+    project.projectUrl = faker.internet.url();
+    project.carousel = faker.datatype.boolean();
+    project.shippingSettings = {
+      shippingSwitch: faker.datatype.boolean(),
+      deliveryInfo: {
+        deliverySwitch: faker.datatype.boolean(),
+        deliveryFee: faker.number.int({ min: 0, max: 100 }),
+        multiProductCheckout: faker.number.int({ min: 0, max: 100 }),
+        freeShippingConditions: faker.number.int({ min: 0, max: 100 }),
+        freeShippingPrice: faker.number.int({ min: 0, max: 100 }),
+        senderName: `${faker.name.firstName()} ${faker.name.lastName()}`,
+        senderPhone: faker.phone.imei(),
+        senderAddress: 'senderAddress',
+      },
+      cvsInfo: {
+        cvsSwitch: faker.datatype.boolean(),
+        deliveryFee: faker.number.int({ min: 0, max: 100 }),
+        multiProductCheckout: faker.number.int({ min: 0, max: 100 }),
+        freeShippingConditions: faker.number.int({ min: 0, max: 100 }),
+        freeShippingPrice: faker.number.int({ min: 0, max: 100 }),
+        cvsNamet: faker.number.int({ min: 0, max: 100 }),
+      },
+    };
+
+    fakeData.push(project);
   }
-  return projects;
+  return fakeData;
 };
 
 const getProjects = async (query) => {
   // page 預設get頁數
   // perPage 預設取得資料筆數
-  const { projectType, category, sortBy, page = 1, perPage = 20 } = query;
+  const { projectForm, projectCategory, sortBy, page = 1, perPage = 20 } = query;
   let totalQuery = {};
   const pipeline = [];
   // filter
-  if (category) {
-    pipeline.push({ $match: { category } });
+  if (projectCategory >= 0) {
+    pipeline.push({ $match: { projectCategory } });
     totalQuery = {
       ...totalQuery,
-      category,
+      projectCategory,
     };
   }
-  if (projectType) {
-    pipeline.push({ $match: { projectType } });
+  if (projectForm >= 0) {
+    pipeline.push({ $match: { projectForm } });
     totalQuery = {
       ...totalQuery,
-      projectType,
+      projectForm,
     };
   }
   // sort
   if (sortBy === 'endTime') {
     // 專案結束 排序舊 -> 新
     pipeline.push({ $sort: { endTime: 1 } });
-  } else if (sortBy === 'targetAmount') {
-    pipeline.push({ $sort: { targetAmount: -1 } });
+  } else if (sortBy === 'goalAmount') {
+    pipeline.push({ $sort: { goalAmount: -1 } });
   } else {
     // 專案開始 排序新 -> 舊
     pipeline.push({ $sort: { startTime: -1 } });
@@ -68,7 +136,6 @@ const getProjects = async (query) => {
   const skipCount = (page - 1) * perPage;
   pipeline.push({ $skip: skipCount });
   pipeline.push({ $limit: perPage });
-
   const data = await Project.aggregate(pipeline).exec();
   const total = await Project.countDocuments(totalQuery);
 
@@ -79,15 +146,12 @@ const getProjects = async (query) => {
 };
 
 const postFakeProjects = async (query) => {
-  try {
-    // 生成count筆亂數 projects 資料
-    const { count } = query;
-    const randomProjects = generateRandomProjects(count || 1);
-    const result = await Project.create(randomProjects);
-    return result;
-  } catch (error) {
-    throw new Error('postFakeProjects api error: ', error);
-  }
+  // /api/projects/fake?count=60
+  // 生成count筆亂數 projects 資料
+  const { count } = query;
+  const randomProjects = generateRandomProjects(count || 60);
+  const result = await Project.create(randomProjects);
+  return result;
 };
 
 const queryProjectsHot = async (filter, options) => {

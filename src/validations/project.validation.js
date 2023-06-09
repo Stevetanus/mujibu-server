@@ -11,8 +11,8 @@ const createProject = {
 
 const getProjects = {
   query: Joi.object().keys({
-    projectType: Joi.number().default(0),
-    category: Joi.number().default(0),
+    projectForm: Joi.number().default(-1),
+    projectCategory: Joi.number().default(-1),
     sortBy: Joi.string().default('startTimer'),
     page: Joi.number(),
     perPage: Joi.number(),
