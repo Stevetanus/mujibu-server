@@ -97,7 +97,7 @@ components:
         category:
           type: string,
           enum: ['0', '1', '2', '3', '4', '5']
-        fundraisingGoal:
+        targetAmount:
           type: number
         backers:
           type: number
@@ -119,7 +119,7 @@ components:
         - image
         - startTime
         - endTime
-        - fundraisingGoal
+        - targetAmount
         - content
       example:
         id: 647c9e1d314fb4345676af18
@@ -133,7 +133,7 @@ components:
         status: 2
         form: 0
         category: 0
-        fundraisingGoal: 3419469
+        targetAmount: 3419469
         backers: 9964
         currentAmount: 2475942
         currentAmountPercentage: 73
