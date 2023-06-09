@@ -14,6 +14,7 @@ const generateRandomProjects = (numProjects) => {
       name: `${faker.person.firstName()} ${faker.person.lastName()}`,
     };
     project.projectTeam = {
+      _id: faker.database.mongodbObjectId(),
       teamName: `團隊名稱_${i}`,
       teamIntroduction: faker.lorem.paragraph(),
       teamAvatar: faker.image.avatar(),
@@ -137,10 +138,11 @@ const getProjects = async (query) => {
   pipeline.push({ $skip: skipCount });
   pipeline.push({ $limit: perPage });
   const data = await Project.aggregate(pipeline).exec();
+  const populatedData = await Project.populate(data, { path: 'projectTeam' });
   const total = await Project.countDocuments(totalQuery);
 
   return {
-    data,
+    data: populatedData,
     total,
   };
 };

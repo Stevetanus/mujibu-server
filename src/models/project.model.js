@@ -14,31 +14,6 @@ const projectProposerSchema = {
   },
 };
 
-const teamSchema = {
-  // id: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Team',
-  //   required: true,
-  // },
-  teamName: String,
-  teamIntroduction: String,
-  teamAvatar: String,
-  representativeName: String,
-  representativeMobile: String,
-  representativePhone: String,
-  representativeEmail: String,
-  companyName: String,
-  companyPhone: String,
-  companyRegistrationNumber: String,
-  companyAddress: String,
-  socialWebsite: String,
-  socialEmail: String,
-  socialFb: String,
-  socialLine: String,
-  socialIg: String,
-  socialYoutube: String,
-};
-
 const planSchema = new mongoose.Schema({
   planName: String,
   planType: String,
@@ -91,8 +66,8 @@ const projectSchema = mongoose.Schema(
       require: true,
     },
     projectTeam: {
-      // TODO: 之後需修正為關聯Team資料
-      type: teamSchema,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Team',
       required: true,
     },
     latestNews: {
