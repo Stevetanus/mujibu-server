@@ -80,10 +80,10 @@ const generateRandomProjects = (numProjects) => {
       deliveryInfo: {
         deliverySwitch: faker.datatype.boolean(),
         deliveryFee: faker.number.int({ min: 0, max: 100 }),
-        multiProductCheckout: faker.number.int({ min: 0, max: 100 }),
-        freeShippingConditions: faker.number.int({ min: 0, max: 100 }),
-        freeShippingPrice: faker.number.int({ min: 0, max: 100 }),
-        senderName: `${faker.name.firstName()} ${faker.name.lastName()}`,
+        multiProductCheckout: faker.number.int({ min: 0, max: 1 }),
+        freeShippingConditions: faker.number.int({ min: 0, max: 1 }),
+        freeShippingPrice: faker.number.int({ min: 0, max: 3000 }),
+        senderName: `${faker.person.firstName()} ${faker.person.lastName()}`,
         senderPhone: faker.phone.imei(),
         senderAddress: 'senderAddress',
         senderPostalCode: 'senderPostalCode',
@@ -91,10 +91,10 @@ const generateRandomProjects = (numProjects) => {
       cvsInfo: {
         cvsSwitch: faker.datatype.boolean(),
         deliveryFee: faker.number.int({ min: 0, max: 100 }),
-        multiProductCheckout: faker.number.int({ min: 0, max: 100 }),
-        freeShippingConditions: faker.number.int({ min: 0, max: 100 }),
-        freeShippingPrice: faker.number.int({ min: 0, max: 100 }),
-        cvsName: faker.number.int({ min: 0, max: 100 }),
+        multiProductCheckout: faker.number.int({ min: 0, max: 1 }),
+        freeShippingConditions: faker.number.int({ min: 0, max: 1 }),
+        freeShippingPrice: faker.number.int({ min: 0, max: 3000 }),
+        cvsName: faker.number.int({ min: 0, max: 2 }),
       },
     };
 
