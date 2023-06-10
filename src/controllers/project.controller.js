@@ -17,9 +17,9 @@ const getProjects = catchAsync(async (req, res) => {
 });
 
 const getHomeHot = catchAsync(async (req, res) => {
-  const filter = { type: '0' }; // 搜尋條件
+  const filter = { projectType: '0' }; // 搜尋條件
   const options = {
-    sortBy: 'backers:desc', // 排序
+    sortBy: 'projectBackers:desc', // 排序
     limit: 6, // 取前 6 筆
     page: 1, // 頁數
   };
@@ -39,9 +39,9 @@ const getHomeCarousel = catchAsync(async (req, res) => {
 });
 
 const getHomePicks = catchAsync(async (req, res) => {
-  const filter = { type: '1' }; // 搜尋條件
+  const filter = { projectType: '1' }; // 搜尋條件
   const options = {
-    sortBy: 'score:desc', // 排序
+    sortBy: 'projectScore:desc', // 排序
     limit: 6, // 取前 6 筆
     page: 1, // 頁數
   };
@@ -50,7 +50,7 @@ const getHomePicks = catchAsync(async (req, res) => {
 });
 
 const getHomeSuccess = catchAsync(async (req, res) => {
-  const filter = { type: '2' }; // 搜尋條件
+  const filter = { projectType: '2' }; // 搜尋條件
   const options = {
     sortBy: 'currentAmountPercentage:desc', // 排序
     limit: 6, // 取前 6 筆
@@ -61,7 +61,7 @@ const getHomeSuccess = catchAsync(async (req, res) => {
 });
 
 const getHomeNew = catchAsync(async (req, res) => {
-  const filter = { type: '0' }; // 搜尋條件
+  const filter = { projectType: '0' }; // 搜尋條件
   const options = {
     sortBy: 'startTime:desc', // 排序
     limit: 6, // 取前 6 筆

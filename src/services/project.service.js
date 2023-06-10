@@ -72,7 +72,7 @@ const generateRandomProjects = (numProjects) => {
     project.attachmentLink = faker.internet.url();
     project.projectContent = faker.lorem.paragraph();
     project.projectScore = faker.number.int({ min: 0, max: 10 });
-    project.projectBackers = faker.number.int({ min: 0, max: 1000 });
+    project.projectBackers = faker.number.int({ min: 0, max: 10000 });
     project.projectUrl = faker.internet.url();
     project.carousel = faker.datatype.boolean();
     project.shippingSettings = {
