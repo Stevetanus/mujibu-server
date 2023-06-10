@@ -1,6 +1,8 @@
+// 目前與專案合併了 備存
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 
+// 回饋方案
 const planSchema = mongoose.Schema(
   {
     projectId: {
@@ -10,48 +12,50 @@ const planSchema = mongoose.Schema(
     },
     planName: {
       type: String,
+      required: true,
       trim: true,
-      default: '',
-    },
+    }, // 方案名稱 *
     planType: {
       type: String,
+      required: true,
       trim: true,
-      default: '',
-    },
+    }, // 方案類型 *
     planAmount: {
       type: Number,
-      default: 0,
-    },
-    price: {
+      required: true,
+    }, // 方案數量 *
+    planPrice: {
       type: Number,
       default: 0,
-    },
-    plan_visual: {
+    }, // 未來售價
+    planImage: {
       type: String,
+      required: true,
       trim: true,
       default: '',
-    },
-    limitAmount: {
+    }, // 方案圖片 *
+    planQuantity: {
       type: Number,
+      required: true,
       default: 0,
-    },
+    }, // 方案數量 *
     planStartTime: {
       type: Date,
       required: true,
-    },
+    }, // 開始時間 *
     planEndTime: {
       type: Date,
       required: true,
-    },
+    }, // 結束時間 *
     planDescription: {
       type: String,
       trim: true,
-      default: '',
-    },
-    planNote: {
+      required: true,
+    }, // 方案敘述 *
+    otherNotes: {
       type: [String],
       default: [],
-    },
+    }, // 其他備註
   },
   {
     timestamps: true,

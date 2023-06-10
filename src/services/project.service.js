@@ -86,6 +86,7 @@ const generateRandomProjects = (numProjects) => {
         senderName: `${faker.name.firstName()} ${faker.name.lastName()}`,
         senderPhone: faker.phone.imei(),
         senderAddress: 'senderAddress',
+        senderPostalCode: 'senderPostalCode',
       },
       cvsInfo: {
         cvsSwitch: faker.datatype.boolean(),
@@ -93,7 +94,7 @@ const generateRandomProjects = (numProjects) => {
         multiProductCheckout: faker.number.int({ min: 0, max: 100 }),
         freeShippingConditions: faker.number.int({ min: 0, max: 100 }),
         freeShippingPrice: faker.number.int({ min: 0, max: 100 }),
-        cvsNamet: faker.number.int({ min: 0, max: 100 }),
+        cvsName: faker.number.int({ min: 0, max: 100 }),
       },
     };
 

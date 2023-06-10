@@ -15,45 +15,158 @@ const projectProposerSchema = {
 };
 
 const planSchema = new mongoose.Schema({
-  planName: String,
-  planType: String,
-  planQuantity: Number,
-  planDiscountPrice: String,
-  planOriginalPrice: String,
-  planStartTime: Date,
-  planEndTime: Date,
-  planImage: String,
-  planDescription: String,
-  otherNotes: [String],
-  isRealProduct: Boolean,
+  // planOrders: {
+  //   type: [mongoose.Schema.Types.ObjectId],
+  //   ref: 'Orders',
+  // }, //TODO foreign key(order id) 訂單id
+  planName: {
+    type: String,
+    required: true,
+    trim: true,
+  }, // 方案名稱 *
+  planType: {
+    type: String,
+    required: true,
+    trim: true,
+  }, // 方案類型 *
+  planQuantity: {
+    type: Number,
+    required: true,
+  }, // 方案數量 *,
+  planDiscountPrice: {
+    type: Number,
+    required: true,
+  }, // 方案特價金額 *
+  planOriginalPrice: {
+    type: Number,
+    required: true,
+  }, // 方案原價金額 *
+  planStartTime: {
+    type: Date,
+    required: true,
+  }, // 開始時間 *,
+  planEndTime: {
+    type: Date,
+    required: true,
+  }, // 結束時間 *,
+  planImage: {
+    type: String,
+    required: true,
+    trim: true,
+  }, // 方案圖片 *,
+  planDescription: {
+    type: String,
+    trim: true,
+    required: true,
+  }, // 方案敘述 *
+  otherNotes: {
+    type: [String],
+    default: [],
+  }, // 其他備註
+  isRealProduct: {
+    type: Boolean,
+    required: true,
+  }, // 是否有實體產品為回饋品 *
 });
 
-const withdrawSettingsSchema = {
-  bankName: String,
-  bankAccount: String,
-};
+const withdrawSettingsSchema = mongoose.Schema(
+  {
+    bankName: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    accountNumber: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+  },
+  { _id: false }
+);
 
-const shippingSettingsSchema = {
-  shippingSwitch: Boolean,
-  deliveryInfo: {
-    deliverySwitch: Boolean,
-    deliveryFee: Number,
-    multiProductCheckout: Number,
-    freeShippingConditions: Number,
-    freeShippingPrice: Number,
-    senderName: String,
-    senderPhone: String,
-    senderAddress: String,
+const shippingSettingsSchema = mongoose.Schema(
+  {
+    shippingSwitch: {
+      type: Boolean,
+      default: false,
+    }, // 不需物流設定
+    deliveryInfo: {
+      deliverySwitch: {
+        type: Boolean,
+        default: false,
+      }, // 不需物流設定
+      deliveryFee: {
+        type: Number,
+        default: 100,
+      }, // 運費
+      multiProductCheckout: {
+        type: Number,
+        enum: [0, 1], // 0: 僅計算一次 // 1:將總運費相加
+        default: 0,
+      }, // 多商品結帳
+      freeShippingConditions: {
+        type: Number,
+        enum: [0, 1], // 0: 無減免條件 // 1:達到免運金額時免運
+        default: 1,
+      }, // 運費減免條件
+      freeShippingPrice: {
+        type: Number,
+        default: 1000,
+      }, // 運費減免金額
+      senderName: {
+        type: String,
+        trim: true,
+        default: '',
+      }, // 寄件人姓名
+      senderPhone: {
+        type: String,
+        trim: true,
+        default: '',
+      }, // 寄件人電話
+      senderAddress: {
+        type: String,
+        trim: true,
+        default: '',
+      }, // 寄件人地址
+      // senderPostalCode: {
+      //   type: String,
+      //   trim: true,
+      //   default: '',
+      // }, // 寄件人郵遞區號
+    },
+    cvsInfo: {
+      cvsSwitch: {
+        type: Boolean,
+        default: false,
+      }, // 不需物流設定
+      deliveryFee: {
+        type: Number,
+        default: 70,
+      }, // 運費
+      multiProductCheckout: {
+        type: Number,
+        enum: [0, 1], // 0: 僅計算一次 // 1:將總運費相加
+        default: 0,
+      }, // 多商品結帳
+      freeShippingConditions: {
+        type: Number,
+        enum: [0, 1], // 0: 無減免條件 // 1:達到免運金額時免運
+        default: 1,
+      }, // 運費減免條件
+      freeShippingPrice: {
+        type: Number,
+        default: 1000,
+      }, // 運費減免金額
+      cvsName: {
+        type: Number,
+        enum: [0, 1, 2], // 0: 7-11 1: 全家 2: 萊爾富
+        default: 0,
+      }, // 超商名稱,
+    },
   },
-  cvsInfo: {
-    cvsSwitch: Boolean,
-    deliveryFee: Number,
-    multiProductCheckout: Number,
-    freeShippingConditions: Number,
-    freeShippingPrice: Number,
-    cvsNamet: Number,
-  },
-};
+  { _id: false }
+);
 
 const projectSchema = mongoose.Schema(
   {

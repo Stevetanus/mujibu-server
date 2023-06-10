@@ -1,9 +1,12 @@
+// 目前與專案合併了 備存
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 
 // Create the shipping_rules schema
 const shippingRulesSchema = mongoose.Schema(
   {
+    homeDeliverySwitch: { type: Boolean, default: false },
+    shippingFee: { type: Number, default: 100 },
     multiple_products_checkout: { type: Boolean, default: false },
     shipping_fee_reduction: { type: Number, default: 0 },
     convenience_store_pickup: { type: Boolean, default: false },

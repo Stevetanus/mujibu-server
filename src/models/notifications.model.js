@@ -1,15 +1,4 @@
-projectId;
-notificationTitle;
-notificationType;
-notificationCategory;
-notificationContent;
-notificationLink;
-isRead;
-receiverType;
-receivers;
-senderType;
-senderId;
-
+// 許願 備存
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 
@@ -20,49 +9,58 @@ const notificationSchema = mongoose.Schema(
       ref: 'Project',
       required: true,
     },
-    planName: {
+    notificationTitle: {
       type: String,
       trim: true,
-      default: '',
-    },
-    planType: {
-      type: String,
-      trim: true,
-      default: '',
-    },
-    planAmount: {
-      type: Number,
-      default: 0,
-    },
-    price: {
-      type: Number,
-      default: 0,
-    },
-    plan_visual: {
-      type: String,
-      trim: true,
-      default: '',
-    },
-    limitAmount: {
-      type: Number,
-      default: 0,
-    },
-    planStartTime: {
-      type: Date,
       required: true,
+      default: '',
     },
-    planEndTime: {
-      type: Date,
+    notificationType: {
+      type: Number,
+      enum: [0, 1, 2, 3, 4], // 0 最新消息 1 留言通知 2 結案通知 3 訂單通知 4 審核通知
       required: true,
+      default: 0,
     },
-    planDescription: {
+    notificationCategory: {
+      type: Number,
+      enum: [0, 1, 2], // 0 orders 1 follows 2 projects
+      required: true,
+      default: 0,
+    },
+    notificationContent: {
       type: String,
       trim: true,
       default: '',
     },
-    planNote: {
-      type: [String],
-      default: [],
+    notificationLink: {
+      type: String,
+      trim: true,
+      required: true,
+      default: '',
+    },
+    isRead: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
+    receiverType: {
+      type: Number,
+      enum: [0, 1, 2], // 0 管理員 1 提案者 2 贊助者
+      required: true,
+      default: 0,
+    },
+    receivers: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Project',
+    },
+    senderType: {
+      type: Number,
+      enum: [0, 1, 2], // 0 管理員 1 提案者 2 贊助者
+      default: 0,
+    },
+    senderId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Project',
     },
   },
   {
