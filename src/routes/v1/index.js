@@ -3,6 +3,7 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const projectRoute = require('./project.route');
 const homeRoute = require('./home.route');
+const proposalRoute = require('./proposal.route');
 
 const docsRoute = require('./docs.route');
 // const config = require('../../config/config');
@@ -25,6 +26,10 @@ const defaultRoutes = [
   {
     path: '/home',
     route: homeRoute,
+  },
+  {
+    path: '/proposal',
+    route: proposalRoute,
   },
 ];
 

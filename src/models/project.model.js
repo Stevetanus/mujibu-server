@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 
-const projectProposerSchema = {
+const projectProposerSchema = new mongoose.Schema({
   // 關聯user id
   id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -12,7 +12,7 @@ const projectProposerSchema = {
     type: String,
     required: true,
   },
-};
+});
 
 const planSchema = new mongoose.Schema({
   // planOrders: {
@@ -217,7 +217,8 @@ const projectSchema = mongoose.Schema(
       // 3 失敗專案
       type: Number,
       enum: [0, 1, 2, 3],
-      required: true,
+      // required: true,
+      default: 0,
     },
     projectStatus: {
       // 專案狀態
@@ -233,7 +234,8 @@ const projectSchema = mongoose.Schema(
       // 9 結案
       type: Number,
       enum: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-      required: true,
+      // required: true,
+      default: 0,
     },
     projectCategory: {
       type: Number,
@@ -301,7 +303,8 @@ const projectSchema = mongoose.Schema(
     },
     carousel: {
       type: Boolean,
-      required: true,
+      // required: true,
+      default: false,
     },
     withdrawSettings: {
       type: withdrawSettingsSchema,
@@ -330,6 +333,12 @@ projectSchema.plugin(toJSON);
 projectSchema.plugin(paginate);
 // Add the toJSON plugin which also ensures to include the virtual properties
 projectSchema.set('toJSON', { virtuals: true });
+
+projectSchema.statics.isProjectNameTaken = async function (projectName, excludeUserId) {
+  const project = await this.findOne({ projectName, _id: { $ne: excludeUserId } });
+  return !!project;
+};
+
 /**
  * @typedef Project
  */

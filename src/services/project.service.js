@@ -178,6 +178,48 @@ const queryProjectsNew = async (filter, options) => {
   return projects;
 };
 
+const createProject = async (userBody) => {
+  const {
+    projectProposer,
+    projectType,
+    projectName,
+    projectDescription,
+    projectImage,
+    projectCategory,
+    goalAmount,
+    startTime,
+    endTime,
+    officialPage,
+    fanPage,
+    attachmentLink,
+    projectContent,
+    projectPlans,
+    withdrawalSettings,
+    shippingSettings,
+  } = userBody.body;
+  const { projectTeam } = userBody.team;
+  const projects = {
+    projectProposer,
+    projectType,
+    projectName,
+    projectDescription,
+    projectTeam,
+    projectImage,
+    projectCategory,
+    goalAmount,
+    startTime,
+    endTime,
+    officialPage,
+    fanPage,
+    attachmentLink,
+    projectContent,
+    projectPlans,
+    withdrawalSettings,
+    shippingSettings,
+  };
+  return Project.create(projects);
+};
+
 module.exports = {
   getProjects,
   postFakeProjects,
@@ -186,4 +228,5 @@ module.exports = {
   queryProjectsPicks,
   queryProjectsSuccess,
   queryProjectsNew,
+  createProject,
 };

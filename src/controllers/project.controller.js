@@ -71,6 +71,12 @@ const getHomeNew = catchAsync(async (req, res) => {
   res.send({ status: 'Success', data });
 });
 
+const postProject = catchAsync(async (req, res, next) => {
+  const project = await projectService.createProject(req);
+  req.project = project;
+  next();
+});
+
 module.exports = {
   postFakeProjects,
   getProjects,
@@ -79,4 +85,5 @@ module.exports = {
   getHomePicks,
   getHomeSuccess,
   getHomeNew,
+  postProject,
 };
