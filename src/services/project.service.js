@@ -1,7 +1,7 @@
-// const httpStatus = require('http-status');
+const httpStatus = require('http-status');
 const { fakerZH_TW: faker } = require('@faker-js/faker');
+const ApiError = require('../utils/ApiError');
 const { Project } = require('../models');
-// const ApiError = require('../utils/ApiError');
 
 const generateRandomProjects = (numProjects) => {
   const fakeData = [];
@@ -217,6 +217,9 @@ const createProject = async (userBody) => {
     withdrawalSettings,
     shippingSettings,
   };
+  if (await Project.isProjectNameTaken(projectName)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Project Name already taken');
+  }
   return Project.create(projects);
 };
 

@@ -1,4 +1,4 @@
-// const httpStatus = require('http-status');
+const httpStatus = require('http-status');
 const { Team } = require('../models');
 const ApiError = require('../utils/ApiError');
 
@@ -41,6 +41,9 @@ const createTeam = async (userBody) => {
     socialIg,
     socialYoutube,
   };
+  if (await Team.isTeamNameTaken(teamName)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Team Name already taken');
+  }
   const newTeam = new Team(team);
   return newTeam
     .save()

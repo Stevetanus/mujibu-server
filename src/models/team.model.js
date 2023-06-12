@@ -103,6 +103,11 @@ const teamSchema = mongoose.Schema(
 teamSchema.plugin(toJSON);
 teamSchema.plugin(paginate);
 
+teamSchema.statics.isTeamNameTaken = async function (teamName, excludeUserId) {
+  const team = await this.findOne({ teamName, _id: { $ne: excludeUserId } });
+  return !!team;
+};
+
 /**
  * @typedef Team
  */
