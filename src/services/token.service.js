@@ -68,7 +68,7 @@ const verifyToken = async (token, type) => {
  * @returns {Promise<Object>}
  */
 const generateAuthTokens = async (user, firebaseUid = null) => {
-  const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
+  const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'days');
   const refreshTokenExpires = moment().add(config.jwt.refreshExpirationDays, 'days');
 
   const accessToken = generateToken(user.id, firebaseUid, accessTokenExpires, tokenTypes.ACCESS);
