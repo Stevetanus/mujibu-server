@@ -62,7 +62,13 @@ const teamFindById = async (userBody) => {
   await team.save();
 };
 
+const getTeamById = async (id) => {
+  const team = await Team.findById(id);
+  return team;
+};
+
 module.exports = {
   createTeam,
   teamFindById,
+  getTeamById,
 };
