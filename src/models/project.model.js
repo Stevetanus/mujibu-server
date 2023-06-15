@@ -1,18 +1,21 @@
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 
-const projectProposerSchema = new mongoose.Schema({
-  // 關聯user id
-  id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // 關聯的User模型
-    required: true,
+const projectProposerSchema = new mongoose.Schema(
+  {
+    // 關聯user id
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User', // 關聯的User模型
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
   },
-  name: {
-    type: String,
-    required: true,
-  },
-});
+  { _id: false }
+);
 
 const planSchema = new mongoose.Schema({
   // planOrders: {
@@ -329,6 +332,7 @@ const projectSchema = mongoose.Schema(
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 

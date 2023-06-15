@@ -2,7 +2,7 @@
 // const pick = require('../utils/pick');
 // const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { projectService } = require('../services');
+const { projectService, teamService } = require('../services');
 
 const postFakeProjects = catchAsync(async (req, res) => {
   const { query } = req;
@@ -19,7 +19,12 @@ const getProjects = catchAsync(async (req, res) => {
 const getProjectById = catchAsync(async (req, res) => {
   const { projectId } = req.params;
   const result = await projectService.getProjectById(projectId);
-  res.send(result);
+  const queryProjectTeam = await teamService.getTeamById(result.projectTeam);
+  const data = { ...result.toObject(), projectTeam: queryProjectTeam.toObject() };
+  res.send({
+    status: 'Success',
+    data,
+  });
 });
 
 const getHomeHot = catchAsync(async (req, res) => {

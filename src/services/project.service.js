@@ -151,14 +151,11 @@ const getProjects = async (query) => {
 
 const getProjectById = async (projectId) => {
   // 移除get回傳__v欄位
-  const data = await Project.findById(projectId).select('-__v');
+  const data = await Project.findById(projectId);
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, 'projectId not found');
   }
-  return {
-    status: 'Success',
-    data,
-  };
+  return data;
 };
 
 const postFakeProjects = async (query) => {

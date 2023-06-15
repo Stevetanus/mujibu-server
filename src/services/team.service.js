@@ -64,6 +64,9 @@ const teamFindById = async (userBody) => {
 
 const getTeamById = async (id) => {
   const team = await Team.findById(id);
+  if (!team) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Team not found');
+  }
   return team;
 };
 

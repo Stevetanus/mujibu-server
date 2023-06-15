@@ -108,6 +108,7 @@ const teamSchema = mongoose.Schema(
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 
