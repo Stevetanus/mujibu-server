@@ -46,6 +46,7 @@ const generateRandomProjects = (numProjects) => {
         planImage: faker.image.url(),
         planDescription: faker.lorem.paragraph(),
         otherNotes: [faker.lorem.sentence(), faker.lorem.sentence()],
+        planBackers: faker.number.int({ min: 0, max: 100 }),
         isRealProduct: faker.datatype.boolean(),
       };
       project.projectPlans.push(plan);
