@@ -52,7 +52,7 @@ const planSchema = mongoose.Schema(
       trim: true,
       required: true,
     }, // 方案敘述 *
-    planNotes: {
+    otherNotes: {
       type: [String],
       default: [],
     }, // 其他備註

@@ -14,63 +14,64 @@ const projectProposerSchema = new mongoose.Schema({
   },
 });
 
-const planSchema = new mongoose.Schema(
-  {
-    // planOrders: {
-    //   type: [mongoose.Schema.Types.ObjectId],
-    //   ref: 'Orders',
-    // }, //TODO foreign key(order id) 訂單id
-    planName: {
-      type: String,
-      required: true,
-      trim: true,
-    }, // 方案名稱 *
-    planType: {
-      type: String,
-      required: true,
-      trim: true,
-    }, // 方案類型 *
-    planQuantity: {
-      type: Number,
-      required: true,
-    }, // 方案數量 *,
-    planDiscountPrice: {
-      type: Number,
-      required: true,
-    }, // 方案特價金額 *
-    planOriginalPrice: {
-      type: Number,
-      required: true,
-    }, // 方案原價金額 *
-    planStartTime: {
-      type: Date,
-      required: true,
-    }, // 開始時間 *,
-    planEndTime: {
-      type: Date,
-      required: true,
-    }, // 結束時間 *,
-    planImage: {
-      type: String,
-      required: true,
-      trim: true,
-    }, // 方案圖片 *,
-    planDescription: {
-      type: String,
-      trim: true,
-      required: true,
-    }, // 方案敘述 *
-    planNotes: {
-      type: [String],
-      default: [],
-    }, // 其他備註
-    isRealProduct: {
-      type: Boolean,
-      required: true,
-    }, // 是否有實體產品為回饋品 *
+const planSchema = new mongoose.Schema({
+  // planOrders: {
+  //   type: [mongoose.Schema.Types.ObjectId],
+  //   ref: 'Orders',
+  // }, //TODO foreign key(order id) 訂單id
+  planName: {
+    type: String,
+    required: true,
+    trim: true,
+  }, // 方案名稱 *
+  planType: {
+    type: String,
+    required: true,
+    trim: true,
+  }, // 方案類型 *
+  planQuantity: {
+    type: Number,
+    required: true,
+  }, // 方案數量 *,
+  planDiscountPrice: {
+    type: Number,
+    required: true,
+  }, // 方案特價金額 *
+  planOriginalPrice: {
+    type: Number,
+    required: true,
+  }, // 方案原價金額 *
+  planStartTime: {
+    type: Date,
+    required: true,
+  }, // 開始時間 *,
+  planEndTime: {
+    type: Date,
+    required: true,
+  }, // 結束時間 *,
+  planImage: {
+    type: String,
+    required: true,
+    trim: true,
+  }, // 方案圖片 *,
+  planDescription: {
+    type: String,
+    trim: true,
+    required: true,
+  }, // 方案敘述 *
+  otherNotes: {
+    type: [String],
+    default: [],
+  }, // 其他備註
+  planBackers: {
+    type: Number,
+    required: true,
   },
-  { _id: false }
-);
+  isRealProduct: {
+    type: Boolean,
+    required: true,
+  }, // 是否有實體產品為回饋品 *
+});
 
 const withdrawSettingsSchema = mongoose.Schema(
   {
@@ -83,6 +84,10 @@ const withdrawSettingsSchema = mongoose.Schema(
       type: String,
       trim: true,
       default: '',
+    },
+    isAgreeTerms: {
+      type: Boolean,
+      default: false,
     },
   },
   { _id: false }

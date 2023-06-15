@@ -93,6 +93,18 @@ const teamSchema = mongoose.Schema(
       trim: true,
       default: '',
     }, // Youtube
+    isTaiwan: {
+      type: Boolean,
+      default: false,
+    },
+    isAgreeTerms: {
+      type: Boolean,
+      default: false,
+    },
+    isOver18: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
