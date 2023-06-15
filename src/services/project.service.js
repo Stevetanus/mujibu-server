@@ -140,7 +140,7 @@ const getProjects = async (query) => {
   pipeline.push({ $skip: skipCount });
   pipeline.push({ $limit: perPage });
   const data = await Project.aggregate(pipeline).exec();
-  const populatedData = await Project.populate(data, { path: 'projectTeam' });
+  const populatedData = await Project.populate(data, { path: 'projectTeam', model: 'Team' });
   const total = await Project.countDocuments(totalQuery);
 
   return {
@@ -152,10 +152,11 @@ const getProjects = async (query) => {
 const getProjectById = async (projectId) => {
   // 移除get回傳__v欄位
   const data = await Project.findById(projectId);
+  const populatedData = await Project.populate(data, { path: 'projectTeam', model: 'Team' });
   if (!data) {
     throw new ApiError(httpStatus.NOT_FOUND, 'projectId not found');
   }
-  return data;
+  return { status: 'Success', data: populatedData };
 };
 
 const postFakeProjects = async (query) => {
