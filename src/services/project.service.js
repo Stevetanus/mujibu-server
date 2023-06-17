@@ -9,10 +9,7 @@ const generateRandomProjects = (numProjects) => {
     const project = {};
     const currentAmount = faker.number.int({ min: 0, max: 10000000 / 2 });
     const goalAmount = faker.number.int({ min: currentAmount, max: 10000000 });
-    project.projectProposer = {
-      id: faker.database.mongodbObjectId(),
-      name: `${faker.person.firstName()} ${faker.person.lastName()}`,
-    };
+    project.projectProposer = faker.database.mongodbObjectId();
     project.projectTeam = {
       _id: faker.database.mongodbObjectId(),
       teamName: `團隊名稱_${i}`,
@@ -32,6 +29,9 @@ const generateRandomProjects = (numProjects) => {
       socialLine: faker.internet.url(),
       socialIg: faker.internet.url(),
       socialYoutube: faker.internet.url(),
+      isOver18: faker.datatype.boolean(0),
+      isAgreeTerms: faker.datatype.boolean(0),
+      isTaiwan: faker.datatype.boolean(0),
     };
     project.projectPlans = [];
     for (let j = 0; j < 3; j += 1) {
@@ -76,6 +76,11 @@ const generateRandomProjects = (numProjects) => {
     project.projectBackers = faker.number.int({ min: 0, max: 10000 });
     project.projectUrl = faker.internet.url();
     project.carousel = faker.datatype.boolean();
+    project.withdrawSettings = {
+      isAgreeTerms: faker.datatype.boolean(),
+      accountNumber: faker.finance.account(),
+      bankName: faker.finance.accountName(),
+    };
     project.shippingSettings = {
       shippingSwitch: faker.datatype.boolean(),
       deliveryInfo: {
@@ -205,7 +210,7 @@ const createProject = async (userBody) => {
     attachmentLink,
     projectContent,
     projectPlans,
-    withdrawalSettings,
+    withdrawSettings,
     shippingSettings,
   } = userBody.body;
   const { projectTeam } = userBody.team;
@@ -225,12 +230,12 @@ const createProject = async (userBody) => {
     attachmentLink,
     projectContent,
     projectPlans,
-    withdrawalSettings,
+    withdrawSettings,
     shippingSettings,
   };
-  if (await Project.isProjectNameTaken(projectName)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Project Name already taken');
-  }
+  // if (await Project.isProjectNameTaken(projectName)) {
+  //   throw new ApiError(httpStatus.BAD_REQUEST, 'Project Name already taken');
+  // }
   return Project.create(projects);
 };
 

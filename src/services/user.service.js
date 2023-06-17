@@ -92,6 +92,19 @@ const deleteUserById = async (userId) => {
   return user;
 };
 
+const queryProjectProposer = async (userId) => {
+  const user = await getUserById(userId);
+  const populatedData = await User.populate(user, { path: 'projectProposer', model: 'User' });
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  const projectProposer = {
+    _id: populatedData._id,
+    name: populatedData.name,
+  };
+  return projectProposer;
+};
+
 module.exports = {
   createOrGetUserForFirebaseLogin,
   createUser,
@@ -100,4 +113,5 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  queryProjectProposer,
 };

@@ -1,22 +1,6 @@
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 
-const projectProposerSchema = new mongoose.Schema(
-  {
-    // 關聯user id
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // 關聯的User模型
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-  },
-  { _id: false }
-);
-
 const planSchema = new mongoose.Schema({
   // planOrders: {
   //   type: [mongoose.Schema.Types.ObjectId],
@@ -24,43 +8,43 @@ const planSchema = new mongoose.Schema({
   // }, //TODO foreign key(order id) 訂單id
   planName: {
     type: String,
-    required: true,
     trim: true,
+    default: '',
   }, // 方案名稱 *
   planType: {
     type: String,
-    required: true,
     trim: true,
+    default: '',
   }, // 方案類型 *
   planQuantity: {
     type: Number,
-    required: true,
+    default: 0,
   }, // 方案數量 *,
   planDiscountPrice: {
     type: Number,
-    required: true,
+    default: 0,
   }, // 方案特價金額 *
   planOriginalPrice: {
     type: Number,
-    required: true,
+    default: 0,
   }, // 方案原價金額 *
   planStartTime: {
     type: Date,
-    required: true,
+    default: null,
   }, // 開始時間 *,
   planEndTime: {
     type: Date,
-    required: true,
+    default: null,
   }, // 結束時間 *,
   planImage: {
     type: String,
-    required: true,
     trim: true,
+    default: '',
   }, // 方案圖片 *,
   planDescription: {
     type: String,
     trim: true,
-    required: true,
+    default: '',
   }, // 方案敘述 *
   otherNotes: {
     type: [String],
@@ -68,11 +52,11 @@ const planSchema = new mongoose.Schema({
   }, // 其他備註
   planBackers: {
     type: Number,
-    required: true,
+    default: 0,
   },
   isRealProduct: {
     type: Boolean,
-    required: true,
+    default: true,
   }, // 是否有實體產品為回饋品 *
 });
 
@@ -182,35 +166,39 @@ const shippingSettingsSchema = mongoose.Schema(
 const projectSchema = mongoose.Schema(
   {
     projectProposer: {
-      type: projectProposerSchema,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User', // 關聯的User模型
     },
     projectPlans: {
       type: [planSchema],
-      require: true,
     },
     projectTeam: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Team',
-      required: true,
     },
     latestNews: {
       type: Array,
+      default: [],
     },
     faqs: {
       type: Array,
+      default: [],
     },
     comments: {
       type: Array,
+      default: [],
     },
     projectOrders: {
       type: Array,
+      default: [],
     },
     projectRefunds: {
       type: Array,
+      default: [],
     },
     projectFollowers: {
       type: Array,
+      default: [],
     },
     projectType: {
       // 專案形式
@@ -218,7 +206,7 @@ const projectSchema = mongoose.Schema(
       // 1 虛擬計畫類
       type: Number,
       enum: [0, 1],
-      required: true,
+      default: 0,
     },
     projectForm: {
       // 專案性質
@@ -228,7 +216,6 @@ const projectSchema = mongoose.Schema(
       // 3 失敗專案
       type: Number,
       enum: [0, 1, 2, 3],
-      // required: true,
       default: 0,
     },
     projectStatus: {
@@ -245,32 +232,31 @@ const projectSchema = mongoose.Schema(
       // 9 結案
       type: Number,
       enum: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-      // required: true,
       default: 0,
     },
     projectCategory: {
       type: Number,
       enum: [0, 1, 2, 3, 4, 5],
-      required: true,
+      default: 0,
     },
     projectName: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     },
     projectImage: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     },
     projectDescription: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     },
     goalAmount: {
       type: Number,
-      required: true,
+      default: 0,
     },
     currentAmount: {
       type: Number,
@@ -278,15 +264,16 @@ const projectSchema = mongoose.Schema(
     },
     startTime: {
       type: Date,
-      required: true,
+      default: null,
     },
     endTime: {
       type: Date,
-      required: true,
+      default: null,
     },
     officialPage: {
       type: String,
       trim: true,
+      default: '',
     },
     fanPage: {
       type: String,
@@ -295,14 +282,16 @@ const projectSchema = mongoose.Schema(
     attachmentLink: {
       type: String,
       trim: true,
+      default: '',
     },
     projectContent: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     },
     projectScore: {
       type: Number,
+      default: 0,
     },
     projectBackers: {
       type: Number,
@@ -311,23 +300,17 @@ const projectSchema = mongoose.Schema(
     projectUrl: {
       type: String,
       trim: true,
+      default: '',
     },
     carousel: {
       type: Boolean,
-      // required: true,
       default: false,
     },
     withdrawSettings: {
       type: withdrawSettingsSchema,
-      required: false,
-      default: {
-        bankName: '',
-        bankAccount: '',
-      },
     },
     shippingSettings: {
       type: shippingSettingsSchema,
-      required: false,
     },
   },
   {

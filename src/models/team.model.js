@@ -5,18 +5,17 @@ const teamSchema = mongoose.Schema(
   {
     projectId: {
       type: [mongoose.Schema.Types.ObjectId],
-      required: true,
       ref: 'Project',
     },
     teamName: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     }, // 團隊名稱 *
     teamIntroduction: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     }, // 團隊介紹 *
     teamAvatar: {
       type: String,
@@ -25,23 +24,23 @@ const teamSchema = mongoose.Schema(
     }, // 團隊圖片
     representativeName: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     }, // 代表人姓名 *
     representativeMobile: {
       type: String,
-      required: true,
+
       trim: true,
     }, // 代表人手機號碼 *
     representativePhone: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     }, // 代表人市內電話*
     representativeEmail: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     }, // 代表人 Email*
     companyName: {
       type: String,
@@ -70,8 +69,8 @@ const teamSchema = mongoose.Schema(
     }, // 官方網站
     socialEmail: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     }, // 客服Email
     socialFb: {
       type: String,

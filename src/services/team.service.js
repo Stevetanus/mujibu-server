@@ -21,6 +21,9 @@ const createTeam = async (userBody) => {
     socialLine,
     socialIg,
     socialYoutube,
+    isTaiwan,
+    isAgreeTerms,
+    isOver18,
   } = userBody.projectTeam;
   const team = {
     teamName,
@@ -40,10 +43,13 @@ const createTeam = async (userBody) => {
     socialLine,
     socialIg,
     socialYoutube,
+    isTaiwan,
+    isAgreeTerms,
+    isOver18,
   };
-  if (await Team.isTeamNameTaken(teamName)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Team Name already taken');
-  }
+  // if (await Team.isTeamNameTaken(teamName)) {
+  //   throw new ApiError(httpStatus.BAD_REQUEST, 'Team Name already taken');
+  // }
   const newTeam = new Team(team);
   return newTeam
     .save()
