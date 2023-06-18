@@ -175,23 +175,48 @@ const postFakeProjects = async (query) => {
 
 const queryProjectsHot = async (filter, options) => {
   const projects = await Project.paginate(filter, options); // 使用 paginate 方法
-  return projects;
+  const populatedData = await Project.populate(projects.data, {
+    path: 'projectTeam',
+    model: 'Team',
+    options: { strictPopulate: true },
+  });
+  return { status: 'Success', data: populatedData };
 };
 const queryProjectsCarousel = async (filter, options) => {
   const projects = await Project.paginate(filter, options); // 使用 paginate 方法
-  return projects;
+  const populatedData = await Project.populate(projects.data, {
+    path: 'projectTeam',
+    model: 'Team',
+    options: { strictPopulate: true },
+  });
+  return { status: 'Success', data: populatedData };
 };
 const queryProjectsPicks = async (filter, options) => {
-  const projectsHot = await Project.paginate(filter, options); // 使用 paginate 方法
-  return projectsHot;
+  const projects = await Project.paginate(filter, options); // 使用 paginate 方法
+  const populatedData = await Project.populate(projects.data, {
+    path: 'projectTeam',
+    model: 'Team',
+    options: { strictPopulate: true },
+  });
+  return { status: 'Success', data: populatedData };
 };
 const queryProjectsSuccess = async (filter, options) => {
   const projects = await Project.paginate(filter, options); // 使用 paginate 方法
-  return projects;
+  const populatedData = await Project.populate(projects.data, {
+    path: 'projectTeam',
+    model: 'Team',
+    options: { strictPopulate: true },
+  });
+  return { status: 'Success', data: populatedData };
 };
 const queryProjectsNew = async (filter, options) => {
   const projects = await Project.paginate(filter, options); // 使用 paginate 方法
-  return projects;
+  const populatedData = await Project.populate(projects.data, {
+    path: 'projectTeam',
+    model: 'Team',
+    options: { strictPopulate: true },
+  });
+  return { status: 'Success', data: populatedData };
 };
 
 const createProject = async (userBody) => {
