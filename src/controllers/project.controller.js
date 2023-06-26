@@ -83,6 +83,20 @@ const postProject = catchAsync(async (req, res, next) => {
   next();
 });
 
+const patchProjectStatus = catchAsync(async (req, res) => {
+  try {
+    const result = await projectService.updateProjectStatusById(req, res);
+    // 檢查專案是否存在
+    if (!result) {
+      return res.status(404).json({ error: 'Project not found.' });
+    }
+    // 返回更新後的專案資料
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.toString() });
+  }
+});
+
 module.exports = {
   postFakeProjects,
   getProjects,
@@ -93,4 +107,5 @@ module.exports = {
   getHomeSuccess,
   getHomeNew,
   postProject,
+  patchProjectStatus,
 };

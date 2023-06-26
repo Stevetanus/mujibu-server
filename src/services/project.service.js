@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const { fakerZH_TW: faker } = require('@faker-js/faker');
+const mongoose = require('mongoose');
 const ApiError = require('../utils/ApiError');
 const { Project } = require('../models');
 
@@ -264,6 +265,29 @@ const createProject = async (userBody) => {
   return Project.create(projects);
 };
 
+const updateProjectStatusById = async (req, res) => {
+  // 從請求中取得projectId與projectStatus
+  const { projectId } = req.params;
+  const { projectStatus } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(projectId)) {
+    return res.status(400).json({ error: 'Invalid projectId.' });
+  }
+
+  if (projectStatus === undefined) {
+    return res.status(400).json({ error: 'Missing projectStatus.' });
+  }
+
+  // 尋找並更新專案狀態
+  const project = await Project.findByIdAndUpdate(
+    projectId,
+    { projectStatus },
+    { new: true } // 這個選項讓mongoose返回更新後的文檔
+  );
+
+  return project;
+};
+
 module.exports = {
   getProjects,
   getProjectById,
@@ -274,4 +298,5 @@ module.exports = {
   queryProjectsSuccess,
   queryProjectsNew,
   createProject,
+  updateProjectStatusById,
 };
