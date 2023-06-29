@@ -6,7 +6,7 @@ const projectController = require('../../controllers/project.controller');
 
 const router = express.Router();
 
-router.route('/list').get(validate(projectValidation.getProjects), projectController.getProjects);
+router.route('/list').get(validate(projectValidation.getProjects), projectController.getBackendProjects);
 router.route('/:projectId/status').patch(validate(projectValidation.getProjectById), projectController.patchProjectStatus);
 
 module.exports = router;

@@ -164,6 +164,52 @@ const getProjects = async (query) => {
   };
 };
 
+const getBackendProjects = async (query) => {
+  // page 預設get頁數
+  // perPage 預設取得資料筆數
+  const { projectForm, projectCategory, sortBy, page = 1, perPage = 20 } = query;
+  let totalQuery = {};
+  const pipeline = [];
+
+  // filter
+  if (projectCategory >= 0) {
+    pipeline.push({ $match: { projectCategory } });
+    totalQuery = {
+      ...totalQuery,
+      projectCategory,
+    };
+  }
+  if (projectForm >= 0) {
+    pipeline.push({ $match: { projectForm } });
+    totalQuery = {
+      ...totalQuery,
+      projectForm,
+    };
+  }
+  // sort
+  if (sortBy === 'endTime') {
+    // 專案結束 排序舊 -> 新
+    pipeline.push({ $sort: { endTime: 1 } });
+  } else if (sortBy === 'goalAmount') {
+    pipeline.push({ $sort: { goalAmount: -1 } });
+  } else {
+    // 專案開始 排序新 -> 舊
+    pipeline.push({ $sort: { startTime: -1 } });
+  }
+  // pagination
+  const skipCount = (page - 1) * perPage;
+  pipeline.push({ $skip: skipCount });
+  pipeline.push({ $limit: perPage });
+  const data = await Project.aggregate(pipeline).exec();
+  const populatedData = await Project.populate(data, { path: 'projectTeam', model: 'Team' });
+  const total = await Project.countDocuments(totalQuery);
+
+  return {
+    data: populatedData,
+    total,
+  };
+};
+
 const getProjectById = async (projectId) => {
   // 移除get回傳__v欄位
   const data = await Project.findById(projectId);
@@ -299,6 +345,7 @@ const updateProjectStatusById = async (req, res) => {
 
 module.exports = {
   getProjects,
+  getBackendProjects,
   getProjectById,
   postFakeProjects,
   queryProjectsHot,

@@ -16,6 +16,12 @@ const getProjects = catchAsync(async (req, res) => {
   res.send(result);
 });
 
+const getBackendProjects = catchAsync(async (req, res) => {
+  const { query } = req;
+  const result = await projectService.getBackendProjects(query);
+  res.send(result);
+});
+
 const getProjectById = catchAsync(async (req, res) => {
   const { projectId } = req.params;
   const result = await projectService.getProjectById(projectId);
@@ -100,6 +106,7 @@ const patchProjectStatus = catchAsync(async (req, res) => {
 module.exports = {
   postFakeProjects,
   getProjects,
+  getBackendProjects,
   getProjectById,
   getHomeHot,
   getHomeCarousel,
