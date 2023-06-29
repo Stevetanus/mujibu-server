@@ -116,6 +116,15 @@ const getProjects = async (query) => {
   const { projectForm, projectCategory, sortBy, page = 1, perPage = 20 } = query;
   let totalQuery = {};
   const pipeline = [];
+
+  // 預設排除 projectStatus 為 0，1，2 的專案
+  const excludeStatuses = [0, 1, 2];
+  pipeline.push({ $match: { projectStatus: { $nin: excludeStatuses } } });
+  totalQuery = {
+    ...totalQuery,
+    projectStatus: { $nin: excludeStatuses },
+  };
+
   // filter
   if (projectCategory >= 0) {
     pipeline.push({ $match: { projectCategory } });
