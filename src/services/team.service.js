@@ -70,7 +70,8 @@ const teamFindById = async (userBody) => {
 
 const getTeamById = async (id) => {
   const team = await Team.findById(id);
-  if (!team) {
+  const populatedData = await Team.populate(team, { path: 'projectId', model: 'Project' });
+  if (!populatedData) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Team not found');
   }
   return team;

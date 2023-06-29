@@ -9,7 +9,7 @@ const getTeam = catchAsync(async (req, res) => {
   if (!team) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Team not found');
   }
-  res.send(team);
+  res.send({ status: 'success', data: team });
 });
 
 const postTeam = catchAsync(async (req, res, next) => {
