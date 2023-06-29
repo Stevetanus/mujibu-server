@@ -23,7 +23,7 @@ const getProjectById = catchAsync(async (req, res) => {
 });
 
 const getHomeHot = catchAsync(async (req, res) => {
-  const filter = { projectForm: '0' }; // 搜尋條件
+  const filter = { projectForm: '0', projectStatus: { $nin: [0, 1, 2] } }; // 搜尋條件
   const options = {
     sortBy: 'projectBackers:desc', // 排序
     limit: 6, // 取前 6 筆
@@ -34,7 +34,7 @@ const getHomeHot = catchAsync(async (req, res) => {
 });
 
 const getHomeCarousel = catchAsync(async (req, res) => {
-  const filter = { carousel: true }; // 搜尋條件
+  const filter = { carousel: true, projectStatus: { $nin: [0, 1, 2] } }; // 搜尋條件
   const options = {
     // sortBy: 'backers:desc', // 排序
     limit: 6, // 取前 6 筆
@@ -45,7 +45,7 @@ const getHomeCarousel = catchAsync(async (req, res) => {
 });
 
 const getHomePicks = catchAsync(async (req, res) => {
-  const filter = { projectForm: '1' }; // 搜尋條件
+  const filter = { projectForm: '1', projectStatus: { $nin: [0, 1, 2] } }; // 搜尋條件
   const options = {
     sortBy: 'projectScore:desc', // 排序
     limit: 6, // 取前 6 筆
@@ -56,7 +56,7 @@ const getHomePicks = catchAsync(async (req, res) => {
 });
 
 const getHomeSuccess = catchAsync(async (req, res) => {
-  const filter = { projectForm: '2' }; // 搜尋條件
+  const filter = { projectForm: '2', projectStatus: { $nin: [0, 1, 2] } }; // 搜尋條件
   const options = {
     sortBy: 'currentAmountPercentage:desc', // 排序
     limit: 6, // 取前 6 筆
@@ -67,7 +67,7 @@ const getHomeSuccess = catchAsync(async (req, res) => {
 });
 
 const getHomeNew = catchAsync(async (req, res) => {
-  const filter = { projectForm: '0' }; // 搜尋條件
+  const filter = { projectForm: '0', projectStatus: { $nin: [0, 1, 2] } }; // 搜尋條件
   const options = {
     sortBy: 'startTime:desc', // 排序
     limit: 6, // 取前 6 筆
