@@ -14,6 +14,13 @@ const routes = require('./routes/v1');
 const backendRoutes = require('./routes/backend');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
+const rateLimit = require('express-rate-limit');
+
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 分鐘
+  max: 30, // 限制每個 IP 30 次請求
+  message: '請求太頻繁，稍後再試',
+});
 
 const app = express();
 
@@ -21,6 +28,8 @@ if (config.env !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
 }
+// set limit for an IP
+app.use(limiter);
 
 // set security HTTP headers
 app.use(helmet());
